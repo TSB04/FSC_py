@@ -43,8 +43,18 @@ class SheetsViewSet(viewsets.ModelViewSet):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     
     def retrieve(self, request, *args, **kwargs):
-        sheet_ine = kwargs.get('ine')
+        sheet_ine = kwargs.get('pk')
         sheet = get_object_or_404(SheetsModel, ine=sheet_ine)
 
         serializer = self.get_serializer(sheet)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+    def update(self, request, *args, **kwargs):
+        sheet_ine = kwargs.get('pk')
+        sheet = get_object_or_404(SheetsModel, pk=sheet_ine)
+
+        serializer = self.get_serializer(sheet, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+
+        self.perform_update(serializer)
         return Response(serializer.data, status=status.HTTP_200_OK)
