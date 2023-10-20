@@ -133,11 +133,15 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Add settings for REST Framework pagination
 REST_FRAMEWORK = {
+    # add pagination settings
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10,
+    # add authentication settings
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_simplejwt.authentication.JWTAuthentication'
-    ]
+    ],
+    # add test settings
+    'TEST_REQUEST_DEFAULT_FORMAT': 'json'
 }
 
 # Add settings for Simple JWT

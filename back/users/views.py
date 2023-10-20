@@ -13,16 +13,18 @@ class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all().order_by('-date_joined')
     serializer_class = UserSerializer
 
+
     # Customize create and update user so the password can be hashed
     def create(self, request, *args, **kwargs):
-        user = User.objects.create_user(
-            username=request.data.get('username'),
-            email=request.data.get('email'),
-        )
-        # hash password
-        user.set_password(request.data.get('password'))
-        message = 'User created successfully'
-        return Response(message, status=status.HTTP_201_CREATED)
+        password = request.data.get('password')
+
+        # only need to check password since username is required
+        if password:
+            user = User.objects.create_user(**request.data)
+            user.set_password(password)
+            message = 'user created successfully'
+            return Response(message, status=status.HTTP_201_CREATED)
+        return Response('password is required', status=status.HTTP_400_BAD_REQUEST)
 
     def update(self, request, *args, **kwargs):
         user_id = kwargs.get('pk')
@@ -32,11 +34,16 @@ class UserViewSet(viewsets.ModelViewSet):
         # hash password if it is provided
         if password:
             user.set_password(password)
-            
-        # update user
-        user.save()
+            user.save()
+            message = 'user updated successfully'
+            return Response(message, status=status.HTTP_200_OK)
+
+        serializer = self.get_serializer(user, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
         message = 'user updated successfully'
         return Response(message, status=status.HTTP_200_OK)
+
 
 class GroupViewSet(viewsets.ModelViewSet):
     """
