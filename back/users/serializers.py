@@ -4,11 +4,11 @@ from back.sheets.serializers import SheetsSerializer
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
-    sheet = SheetsSerializer(many=True, read_only=True)
+    sheets = SheetsSerializer(many=True, read_only=True)
 
     class Meta:
         model = User
-        fields = ['url', 'username', 'email', 'sheet', 'password', 'first_name', 'last_name']
+        fields = ['url', 'username', 'email', 'sheets', 'password', 'first_name', 'last_name']
 
 
 class GroupSerializer(serializers.HyperlinkedModelSerializer):
