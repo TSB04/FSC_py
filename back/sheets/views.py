@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import IsAuthenticated
-from .permissions import IsGetRequest
+from back.security.permissions import IsGetRequest
 from .serializers import SheetsSerializer
 from .models import SheetsModel
 from drf_yasg.utils import swagger_auto_schema

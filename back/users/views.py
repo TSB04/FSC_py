@@ -2,7 +2,9 @@ from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework import status
-from back.users.serializers import UserSerializer, GroupSerializer
+from back.security.permissions import IsPostRequest
+from rest_framework.permissions import IsAuthenticated
+from back.users.serializers import UserSerializer
 from rest_framework.generics import get_object_or_404
 
 
@@ -13,12 +15,20 @@ class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all().order_by('-date_joined')
     serializer_class = UserSerializer
 
+    def get_permissions(self):
+        # allow non-authenticated user to create via POST
+        if self.action == 'create':
+            permission_classes = [IsPostRequest]
+        else:
+            permission_classes = [IsAuthenticated]
+        return [permission() for permission in permission_classes]
 
     # Customize create and update user so the password can be hashed
+
     def create(self, request, *args, **kwargs):
         password = request.data.get('password')
 
-        # only need to check password since username is required
+        # only need to check password since username is required by default
         if password:
             user = User.objects.create_user(**request.data)
             user.set_password(password)
@@ -45,9 +55,3 @@ class UserViewSet(viewsets.ModelViewSet):
         return Response(message, status=status.HTTP_200_OK)
 
 
-class GroupViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows groups to be viewed or edited.
-    """
-    queryset = Group.objects.all()
-    serializer_class = GroupSerializer

@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'back.users',
     'back.sheets',
+    'back.comments',
     'rest_framework_simplejwt',
     'rest_framework_swagger',
     'drf_yasg'
@@ -160,5 +161,7 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_REFRESH_EXP_CLAIM': 'refresh_exp',
     'SLIDING_TOKEN_LIFETIME': timedelta(minutes=60),
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
-    'TOKEN_OBTAIN_SERIALIZER': 'back.sheets.token.MyTokenObtainPairSerializer'
+    'TOKEN_OBTAIN_SERIALIZER': 'back.security.token.MyTokenObtainPairSerializer'
+
+    
 }
