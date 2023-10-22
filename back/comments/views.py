@@ -63,11 +63,3 @@ class CommentsViewSet(viewsets.ModelViewSet):
         comment.delete()
         message = 'comment deleted successfully'
         return Response(message,status=status.HTTP_204_NO_CONTENT)
-    
-    # def give_stars(self, request, *args, **kwargs):
-    #     comment_id = kwargs.get('pk')
-    #     comment = get_object_or_404(CommentsModel, pk=comment_id)
-
-    #     comment.stars = comment.stars + 1
-    #     comment.save()
-    #     return Response(status=status.HTTP_200_OK)
