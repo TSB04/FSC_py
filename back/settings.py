@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'back.users',
     'back.sheets',
     'back.comments',
+    'back.stars',
     'rest_framework_simplejwt',
     'rest_framework_swagger',
     'drf_yasg'
