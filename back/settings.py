@@ -45,20 +45,17 @@ INSTALLED_APPS = [
     'back.stars',
     'rest_framework_simplejwt',
     'rest_framework_swagger',
-    'drf_yasg',
-    "corsheaders",
+    'drf_yasg'
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-        # add CORS middleware
-    'corsheaders.middleware.CorsMiddleware',
-    'django.middleware.common.CommonMiddleware',
 ]
 
 ROOT_URLCONF = 'back.urls'
@@ -80,36 +77,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'back.wsgi.application'
-
-# Add CORS settings
-CORS_ALLOW_ALL_ORIGINS: bool = True
-CORS_ALLOW_CREDENTIALS: bool = True
-
-CORS_ALLOW_METHODS = (
-    "DELETE",
-    "GET",
-    "OPTIONS",
-    "PATCH",
-    "POST",
-    "PUT",
-)
-
-CORS_ALLOW_HEADERS = (
-    "accept",
-    "authorization",
-    "content-type",
-    "user-agent",
-    "x-csrftoken",
-    "x-requested-with",
-)
-
-CORS_ALLOW_PRIVATE_NETWORK: bool = True
-
-CSRF_TRUSTED_ORIGINS = [
-    "https://read-and-write.example.com",
-    "http://localhost:4200/",
-    "http://127.0.0.1:4200/",
-]
 
 
 # Database
@@ -196,4 +163,6 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_LIFETIME': timedelta(minutes=60),
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
     'TOKEN_OBTAIN_SERIALIZER': 'back.security.token.MyTokenObtainPairSerializer'
+
+    
 }

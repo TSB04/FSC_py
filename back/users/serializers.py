@@ -9,9 +9,9 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
     sheets = SheetsSerializer(many=True)
 
     # get user's comments
-    comments = CommentsSerializer(many=True)
+    commments = CommentsSerializer(many=True)
 
     # comments = CommentsSerializer(many=True, read_only=True)
     class Meta:
         model = User
-        fields = ['id', 'username', 'email', 'password', 'first_name', 'last_name', 'sheets', 'comments']
+        fields = ['url', 'username', 'email', 'password', 'first_name', 'last_name', 'sheets']
